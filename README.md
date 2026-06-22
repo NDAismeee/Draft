@@ -101,13 +101,11 @@ open_email → view → apply_coupon → purchase
 
 ## Output
 
-```text
-User sequence H_i
-Campaign C
-Treatment indicator T
-Observed post-treatment sequence
-Observed outcome Y
-```
+- User sequence $H_i$
+- Campaign $C$
+- Treatment indicator $T$
+- Observed post-treatment sequence
+- Observed outcome $Y$
 
 Ví dụ dưới dạng object:
 
@@ -314,9 +312,7 @@ $$e_C = W[e_{\text{text}}; e_{\text{structured}}]$$
 
 ## Output
 
-```text
-Campaign semantic vector e_C
-```
+Campaign semantic vector $e_C$
 
 Ví dụ:
 
@@ -382,10 +378,8 @@ Nhưng không nên thay đổi mạnh:
 
 ## Input
 
-```text
-User state z_U001
-Campaign vector e_C11
-```
+- User state $z_{\mathrm{U001}}$
+- Campaign vector $e_{\mathrm{C11}}$
 
 ## Cách xử lý đơn giản
 
@@ -534,11 +528,9 @@ Campaign:
 
 Machine input:
 
-```text
-adjusted state z̃_t
-campaign embedding e_C
-current action/context
-```
+- Adjusted state $\tilde{z}_t$
+- Campaign embedding $e_C$
+- Current action/context
 
 ## Output 1: Next-action distribution
 
@@ -596,7 +588,7 @@ Expected revenue   = 91,800 VND
 
 Nếu sample action là `view_product`:
 
-$$z_{t+1}=f(z_t,\text{view\_product},e_C)$$
+$$z_{t+1}=f(z_t,\mathrm{viewProduct},e_C)$$
 
 User state có thể thay đổi:
 
@@ -672,9 +664,7 @@ Khi đó treatment và control được random, việc so sánh đáng tin cậy
 
 Học propensity score:
 
-$$
-\hat e_i=P(T_i=1\mid H_i,X_i)
-$$
+$$\hat{e}_i=P(T_i=1\mid H_i,X_i)$$
 
 Ví dụ:
 
@@ -691,7 +681,7 @@ Sau đó dùng:
 
 ## Doubly robust target
 
-$$\tilde Y_i(1) = \hat\mu_1(H_i) + \frac{T_i}{\hat e_i}\left[Y_i-\hat\mu_1(H_i)\right]$$
+$$\tilde{Y}_i(1) = \hat{\mu}_1(H_i) + \frac{T_i}{\hat{e}_i}\left[Y_i-\hat{\mu}_1(H_i)\right]$$
 
 Tương tự cho control.
 
@@ -738,12 +728,10 @@ Model có thể học nhầm targeting policy thành campaign effect.
 
 ## Input
 
-```text
-Initial user state z_U001
-New campaign C11
-No-campaign condition C0
-Trained world model
-```
+- Initial user state $z_{\mathrm{U001}}$
+- New campaign $C_{11}$
+- No-campaign condition $C_0$
+- Trained world model
 
 ## Tạo hai twins
 
@@ -876,9 +864,7 @@ Chạy $K=1000$ hoặc $K=10000$ lần.
 230 kết thúc bằng purchase
 ```
 
-$$
-\hat P(Y=1\mid C11)=0.23
-$$
+$$\hat{P}(Y=1\mid C_{11})=0.23$$
 
 ### Control outputs
 
@@ -887,9 +873,7 @@ $$
 130 kết thúc bằng purchase
 ```
 
-$$
-\hat P(Y=1\mid C0)=0.13
-$$
+$$\hat{P}(Y=1\mid C_0)=0.13$$
 
 ## Output
 
@@ -909,9 +893,7 @@ Control purchase probability   = 0.13
 
 ### Individual uplift
 
-$$
-\hat\tau_{U001}=0.23-0.13=0.10
-$$
+$$\hat{\tau}_{\mathrm{U001}}=0.23-0.13=0.10$$
 
 ### Revenue uplift
 
