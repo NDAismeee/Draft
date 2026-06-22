@@ -138,11 +138,11 @@ Ví dụ dưới dạng object:
 
 Biến toàn bộ lịch sử của user thành một vector trạng thái hiện tại:
 
-\[
+$$
 z_{i,t}=F_{\text{user}}(H_{i,1:t},X_i)
-\]
+$$
 
-Trong đó \(z_{i,t}\) là latent user state.
+Trong đó $z_{i,t}$ là latent user state.
 
 ## Input
 
@@ -172,7 +172,7 @@ time_since_previous_event
 
 Mỗi event được mã hóa thành vector:
 
-\[
+$$
 x_t=
 E_{\text{event}}
 +
@@ -181,7 +181,7 @@ E_{\text{product}}
 E_{\text{time}}
 +
 E_{\text{channel}}
-\]
+$$
 
 Sau đó đưa cả chuỗi qua:
 
@@ -203,9 +203,9 @@ User state z_U001
 
 Về máy học, output là vector:
 
-\[
+$$
 z_{U001}\in\mathbb{R}^{d}
-\]
+$$
 
 Ví dụ:
 
@@ -252,9 +252,9 @@ model không biết user:
 
 Module này giúp model nhớ toàn bộ lịch sử thay vì chỉ dùng:
 
-\[
+$$
 P(a_{t+1}\mid a_t)
-\]
+$$
 
 như transition model đơn giản.
 
@@ -270,9 +270,9 @@ Hai user cùng đang ở `view_product` có thể bị dự đoán giống nhau 
 
 Biến campaign mới thành một vector mô tả ý nghĩa và thuộc tính của campaign:
 
-\[
+$$
 e_C=F_{\text{campaign}}(\text{text},\text{attributes})
-\]
+$$
 
 ## Input
 
@@ -307,15 +307,15 @@ Text được đưa qua:
 
 Tạo:
 
-\[
+$$
 e_{\text{text}}
-\]
+$$
 
 ### Structured branch
 
 Các thuộc tính category được embedding, giá trị số được chuẩn hóa:
 
-\[
+$$
 e_{\text{structured}}
 =
 MLP(
@@ -324,14 +324,14 @@ MLP(
 \text{channel},
 \text{category}
 )
-\]
+$$
 
 Sau đó kết hợp:
 
-\[
+$$
 e_C=
 W[e_{\text{text}};e_{\text{structured}}]
-\]
+$$
 
 ## Output
 
@@ -412,9 +412,9 @@ Campaign vector e_C11
 
 Nối hai vector:
 
-\[
+$$
 h=[z_i;e_C]
-\]
+$$
 
 Nhưng cách này tương đối yếu vì campaign chỉ trở thành feature bổ sung.
 
@@ -422,23 +422,23 @@ Nhưng cách này tương đối yếu vì campaign chỉ trở thành feature b
 
 Campaign tạo một adapter hoặc gate điều chỉnh world model:
 
-\[
+$$
 \Delta\theta_C=H_\psi(e_C)
-\]
+$$
 
-\[
+$$
 \theta_C=\theta_0+\Delta\theta_C
-\]
+$$
 
 Hoặc dùng feature-wise modulation:
 
-\[
+$$
 \gamma_C,\beta_C=H_\psi(e_C)
-\]
+$$
 
-\[
+$$
 \tilde z_i=\gamma_C\odot z_i+\beta_C
-\]
+$$
 
 Hiểu dễ dàng:
 
@@ -477,9 +477,9 @@ Có hai dạng khả thi:
 
 ### Dạng A: adjusted state
 
-\[
+$$
 \tilde z_{i,C}
-\]
+$$
 
 ```python
 adjusted_user_state.shape = [128]
@@ -487,9 +487,9 @@ adjusted_user_state.shape = [128]
 
 ### Dạng B: campaign-specific model parameters
 
-\[
+$$
 \theta_C
-\]
+$$
 
 Ví dụ low-rank adapter matrices:
 
@@ -524,22 +524,22 @@ Module này dùng campaign embedding để **điều chỉnh toàn bộ dynamics
 
 Dự đoán điều gì xảy ra tiếp theo sau trạng thái hiện tại.
 
-\[
+$$
 P(a_{t+1}\mid z_t,e_C)
-\]
+$$
 
 Có thể mở rộng thành:
 
-\[
+$$
 P(a_{t+1},\Delta t_{t+1},r_{t+1}\mid z_t,e_C)
-\]
+$$
 
 Trong đó:
 
-- \(a_{t+1}\): action tiếp theo;
-- \(\Delta t_{t+1}\): thời gian tới action;
-- \(r_{t+1}\): reward/revenue;
-- \(z_{t+1}\): trạng thái mới.
+- $a_{t+1}$: action tiếp theo;
+- $\Delta t_{t+1}$: thời gian tới action;
+- $r_{t+1}$: reward/revenue;
+- $z_{t+1}$: trạng thái mới.
 
 ## Input
 
@@ -580,9 +580,9 @@ Ví dụ:
 
 Tổng bằng 1:
 
-\[
+$$
 \sum_a P(a_{t+1}=a)=1
-\]
+$$
 
 Kiểu dữ liệu:
 
@@ -621,9 +621,9 @@ Expected revenue   = 91,800 VND
 
 Nếu sample action là `view_product`:
 
-\[
+$$
 z_{t+1}=f(z_t,\text{view_product},e_C)
-\]
+$$
 
 User state có thể thay đổi:
 
@@ -703,9 +703,9 @@ Khi đó treatment và control được random, việc so sánh đáng tin cậy
 
 Học propensity score:
 
-\[
+$$
 \hat e_i=P(T_i=1\mid H_i,X_i)
-\]
+$$
 
 Ví dụ:
 
@@ -722,7 +722,7 @@ Sau đó dùng:
 
 ## Doubly robust target
 
-\[
+$$
 \tilde Y_i(1)
 =
 \hat\mu_1(H_i)
@@ -731,7 +731,7 @@ Sau đó dùng:
 \left[
 Y_i-\hat\mu_1(H_i)
 \right]
-\]
+$$
 
 Tương tự cho control.
 
@@ -789,27 +789,27 @@ Trained world model
 
 ### Treatment twin
 
-\[
+$$
 z_0^{(1)}=z_{U001}
-\]
+$$
 
 Campaign:
 
-\[
+$$
 C=C11
-\]
+$$
 
 ### Control twin
 
-\[
+$$
 z_0^{(0)}=z_{U001}
-\]
+$$
 
 Campaign:
 
-\[
+$$
 C=C0
-\]
+$$
 
 Hai twins bắt đầu từ **cùng một user state**.
 
@@ -907,7 +907,7 @@ no_campaign
 
 ## Không chỉ chạy một lần
 
-Chạy \(K=1000\) hoặc \(K=10000\) lần.
+Chạy $K=1000$ hoặc $K=10000$ lần.
 
 ### Treatment outputs
 
@@ -916,9 +916,9 @@ Chạy \(K=1000\) hoặc \(K=10000\) lần.
 230 kết thúc bằng purchase
 ```
 
-\[
+$$
 \hat P(Y=1\mid C11)=0.23
-\]
+$$
 
 ### Control outputs
 
@@ -927,9 +927,9 @@ Chạy \(K=1000\) hoặc \(K=10000\) lần.
 130 kết thúc bằng purchase
 ```
 
-\[
+$$
 \hat P(Y=1\mid C0)=0.13
-\]
+$$
 
 ## Output
 
@@ -949,9 +949,9 @@ Control purchase probability   = 0.13
 
 ### Individual uplift
 
-\[
+$$
 \hat\tau_{U001}=0.23-0.13=0.10
-\]
+$$
 
 ### Revenue uplift
 
@@ -967,7 +967,7 @@ Incremental revenue        = 82,000 VND
 
 Treatment và control nên dùng cùng random noise.
 
-Ví dụ cùng số ngẫu nhiên \(u_1=0.4\):
+Ví dụ cùng số ngẫu nhiên $u_1=0.4$:
 
 - Treatment probabilities khiến 0.4 rơi vào `open_email`;
 - Control probabilities có thể khiến 0.4 rơi vào `natural_visit`.
@@ -1189,17 +1189,17 @@ Campaign text + metadata → e_campaign
 
 Ban đầu học behavior nói chung:
 
-\[
+$$
 P(a_{t+1}\mid z_t)
-\]
+$$
 
 ## Bước 5: Học intervention adapter
 
 Học campaign làm thay đổi dynamics như thế nào:
 
-\[
+$$
 P(a_{t+1}\mid z_t,e_C)
-\]
+$$
 
 ## Bước 6: Causal adjustment
 
@@ -1349,9 +1349,9 @@ Deploy to high-uplift segments
 
 | Module | Câu hỏi nó trả lời | Output |
 |---|---|---|
-| User History Encoder | User hiện đang ở trạng thái nào? | \(z_i\) |
-| Campaign Encoder | Campaign mới có ý nghĩa gì? | \(e_C\) |
-| Intervention Adapter | Campaign thay đổi behavior dynamics như thế nào? | \(\tilde z\) hoặc \(\Delta\theta_C\) |
+| User History Encoder | User hiện đang ở trạng thái nào? | $z_i$ |
+| Campaign Encoder | Campaign mới có ý nghĩa gì? | $e_C$ |
+| Intervention Adapter | Campaign thay đổi behavior dynamics như thế nào? | $\tilde z$ hoặc $\Delta\theta_C$ |
 | World Model | Hành động tiếp theo là gì? | Action probabilities, time, revenue, next state |
 | Causal Module | Thay đổi đó có thật sự do campaign không? | Adjusted targets/losses |
 | Twin Rollout | Có và không có campaign khác nhau thế nào? | Treatment/control trajectories |
